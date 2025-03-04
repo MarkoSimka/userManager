@@ -2,47 +2,35 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',
+        'full_name',
         'email',
-        'password',
+        'phone',
+        'date_of_birth',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
+    protected $casts = [
+        'date_of_birth' => 'date',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
+    public static function validationRules(){
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users, email',
+            'phone' => 'required|string|regex:/^[0-9\-\(\)\/\+\s]*$/|min:11',
+            'date_of_birth' => 'required|date|bofore:today',
         ];
+    }
+
+    public function getAgeAttribure(){
+        return $this->date_of_birth ? Carbon::parse($this->date_od_birth)->age : null;
     }
 }
