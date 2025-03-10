@@ -23,14 +23,14 @@ class User extends Authenticatable
 
     public static function validationRules(){
         return [
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users, email',
-            'phone' => 'required|string|regex:/^[0-9\-\(\)\/\+\s]*$/|min:11',
-            'date_of_birth' => 'required|date|bofore:today',
+            'full_name' => 'required|string|max:60',
+            'email' => 'required|email',
+            'phone' => 'required|string|regex:/^\+[0-9\-\(\)\/\s]*$/|min:11',
+            'date_of_birth' => 'required|date|before:today',
         ];
     }
 
-    public function getAgeAttribure(){
-        return $this->date_of_birth ? Carbon::parse($this->date_od_birth)->age : null;
+    public function getAgeAttribute(){
+        return $this->date_of_birth ? Carbon::parse($this->date_of_birth)->age : null;
     }
 }
