@@ -96,8 +96,6 @@ $(document).ready(function() {
         if (status) {
             this.submit();
         }
-
-        console.log("Form validation status: " + status);
     });
 });
 </script>
