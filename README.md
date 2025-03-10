@@ -38,6 +38,65 @@ You can now access the server at http://127.0.0.1:8000
 
 ![Untitled Diagram drawio](https://github.com/user-attachments/assets/ec1c8666-b530-4309-94fb-e5c639ffe628)
 
+###    Description
+The system manages conversations between brokers and vendors, with users employed by companies. Conversations can be started by primary users and must involve at least one broker and one vendor. Messages can include text and files. Read receipts track unread messages for each user. The ER diagram captures these entities and their relationships.
+
+### **Entities & Relationships**
+The following entities and relationships define the system:
+
+### **1. COMPANY**
+- **Key Attributes**: `id`, `name`, `type`
+- **Description**: Represents a broker or vendor company.
+- **Relationships**:
+  - **One-to-Many**: `COMPANY` → `USER` (A company employs multiple users)
+  - **One-to-Many**: `COMPANY` → `CONVERSATION` (A company participates in conversations)
+
+---
+
+### **2. USER**
+- **Key Attributes**: `id`, `name`, `companyId`, `isPrimary`
+- **Description**: Represents a user employed by a company.
+- **Relationships**:
+  - **One-to-Many**: `USER` → `CONVERSATION` (A user starts multiple conversations)
+  - **One-to-Many**: `USER` → `MESSAGE` (A user sends multiple messages)
+  - **One-to-Many**: `USER` → `READ_RECEIPT` (A user receives read receipts)
+
+---
+
+### **3. CONVERSATION**
+- **Key Attributes**: `id`, `topic`, `startedBy`, `brokerCompanyId`, `vendorCompanyId`, `startedAt`, `isArchived`
+- **Description**: Represents a conversation between a broker and a vendor.
+- **Relationships**:
+  - **One-to-Many**: `CONVERSATION` → `MESSAGE` (A conversation contains multiple messages)
+  - **One-to-Many**: `CONVERSATION` → `READ_RECEIPT` (Tracks read status of messages)
+
+---
+
+### **4. MESSAGE**
+- **Key Attributes**: `id`, `conversationId`, `senderId`, `content`, `sentAt`
+- **Description**: Represents a message within a conversation.
+- **Relationships**:
+  - **One-to-Many**: `MESSAGE` → `FILE` (A message can have multiple file uploads)
+  - **One-to-Many**: `MESSAGE` → `READ_RECEIPT` (Tracks read status of messages)
+
+---
+
+### **5. FILE**
+- **Key Attributes**: `id`, `messageId`, `filePath`
+- **Description**: Represents a file uploaded within a message.
+- **Relationships**:
+  - **One-to-Many**: `MESSAGE` → `FILE` (A message can have multiple file uploads)
+
+---
+
+### **6. READ_RECEIPT**
+- **Key Attributes**: `id`, `messageId`, `userId`, `isRead`
+- **Description**: Tracks the read status of messages for each user.
+- **Relationships**:
+  - **One-to-Many**: `MESSAGE` → `READ_RECEIPT` (Each message tracks its read status)
+  - **One-to-Many**: `USER` → `READ_RECEIPT` (Each user receives multiple read receipts)
+
+
 ##    Scoping task
 
 ###    Departments as Sub-Entities of the Company: 
