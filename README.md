@@ -32,6 +32,24 @@ Start the local development server
 
     php artisan serve
 
+Change caching folders permissions:
+
+    sudo chmod -R 777 storage && chmod -R 777 bootstrap/cache
+
+## Configure the .env file
+
+Open .env and set up the database connection:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=root
+DB_PASSWORD=
+```
+Ensure **MySQL** is running in **XAMPP** before proceeding.
+
 You can now access the server at http://127.0.0.1:8000
 
 ##    ER Diagram
