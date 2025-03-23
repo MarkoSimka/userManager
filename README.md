@@ -117,6 +117,13 @@ The following entities and relationships define the system:
 
 ##    Scoping task
 
+We have a system where the companies can log in and manage their profiles. Currently, within the company profile, they can add a single
+email address, which is used for all communication that is sent by the system to the company.
+We have a requirement to enable the company to add multiple email addresses, so they can be used for different types of communication
+(marketing, billing, etc...).
+List all the changes that you think must happen to fulfill this requirement. Share any details on how you would approach this requirement.
+Feel free to insert any assumptions
+
 ###    Departments as Sub-Entities of the Company: 
 Each company will have the ability to create departments, which will act as sub-entities within the company profile. These departments will each be tied to a specific email address. The communication for different types (e.g., marketing, billing, support) will be sent to the respective department's email.
   *  During the company registration or setup process, the user will be able to create these departments, assigning a unique email address for each one.
